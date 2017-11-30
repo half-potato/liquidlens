@@ -81,3 +81,9 @@ def calc_depth(focuses, focus_measures, step=2):
     #nan = np.where(np.isnan(u))
     #u[nan] = d2[nan]
     return u * 40
+
+def gray_to_focus(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    lap = cv2.GaussianBlur(modified_laplace(gray), (9,9), 0)
+    mean = ndimage.convolve(lap, mean_kernel, mode="constant")
+    return mean

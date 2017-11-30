@@ -31,6 +31,10 @@ def setCaptureRect(event, x, y, flags, param):
             ty = max(y, rect[1])
             w = tx - ox
             h = ty - oy
+            #w = 40
+            #h = 40
+            #ox = 640/2 - w/2
+            #oy = 480/2 - h/2
             rect = [ox, oy, w, h]
     elif event == cv2.EVENT_LBUTTONUP:
         is_drawing=False
@@ -40,6 +44,11 @@ def setCaptureRect(event, x, y, flags, param):
         ty = max(y, rect[1])
         w = tx - ox
         h = ty - oy
+        #w = 40
+        #h = 40
+        #ox = 640/2 - w/2
+        #oy = 480/2 - h/2
+        print(w, h)
         rect = [ox, oy, w, h]
 
 x_kernel = np.array([[0, -1, 0], [0, 2, 0], [0, -1, 0]])
@@ -82,7 +91,7 @@ while True:
             # Sort ft_measurements and print top ten results
             ft_measurements = np.array(ft_measurements)
             ft_measurements = ft_measurements[(-1*ft_measurements[:,0]).argsort()]
-            print(ft_measurements[0:10])
+            print(np.mean(ft_measurements[0:10, 1]))
     if is_fine_tuning:
         focus = measurements[ft_wb_i // fine_tuning_iterations, 1]
     else:

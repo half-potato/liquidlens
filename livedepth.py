@@ -1,9 +1,7 @@
 import cv2
 from scipy import ndimage
-import os, sys
+import os, sys, depthtofocus, time, util
 import numpy as np
-import depthtofocus
-import time
 
 if len(sys.argv) != 2:
     print("Use: python livedepth.py CAMERA_DEV_NUM")
@@ -11,26 +9,10 @@ if len(sys.argv) != 2:
 dev = int(sys.argv[1])
 print("Opening capture device")
 cap_s = "nvcamerasrc ! video/x-raw(memory:NVMM), width=(int)1280, height=(int)720, format=(string)I420, framerate=(fraction)24/1 ! nvvidconv flip-method=2 ! videoconvert ! appsink"
-cap = cv2.VideoCapture(dev)
-cap.set(3, 640)
-cap.set(4, 480)
+cap = util.openCamera(dev)
 
 print("Disabling auto focus")
 os.system("v4l2-ctl -d %i -c focus_auto=0" % dev)
-
-print("Waiting for camera")
-null_frame_count = 0
-while True:
-    ret, frame = cap.read()
-    if null_frame_count > 30:
-        print("Unable to open device")
-        exit()
-    if frame is None or len(frame) < 1:
-        print("No image")
-        null_frame_count += 1
-        continue
-    if not (frame is None or len(frame) < 1):
-        break
 
 measure_per_depth = 8
 max_focus = 255

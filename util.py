@@ -32,3 +32,6 @@ def openCamera(dev, patience=5):
         if not (frame is None or len(frame) < 1):
             break
     return cap
+
+def focus_to_focal_length(f):
+    return 165470*f**(-2.55)

@@ -1,14 +1,10 @@
-import cv2, os, sys, time
-import numpy as np
+import cv2, os, sys, time, util
 
 dev = int(sys.argv[1])
 print("Opening capture device")
 cap = cv2.VideoCapture(dev)
 folder = sys.argv[2]
 os.system("v4l2-ctl -d %i -c focus_auto=0" % dev)
-
-def focus_to_focal_length(f):
-    return 165470*f**(-2.55)
 
 if not os.path.isdir(folder):
     os.mkdir(folder)
@@ -30,11 +26,11 @@ while True:
     if not (frame is None or len(frame) < 1):
         break
 
-focuses = np.arange(0, 255, 25)
+focuses = xrange(0, 255, 25)
 
 for f in focuses:
     os.system("v4l2-ctl -d %i -c focus_absolute=%i" % (dev, f))
-    print(focus_to_focal_length(f))
+    print(util.focus_to_focal_length(f))
     time.sleep(0.1)
     ret, frame = cap.read()
     if frame is None or len(frame) < 1:

@@ -15,6 +15,7 @@ def openCamera(dev, patience=5):
     signal.alarm(5)
     try:
         ret, frame = cap.read()
+        signal.pause()
     except:
         print("Camera timed out using custom timeout")
 

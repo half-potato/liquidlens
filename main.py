@@ -96,7 +96,7 @@ def align(image_stack):
     lx, ly = nw_corner[:2]
     rx, ry = se_corner[:2]
 
-    _stack = [img[ly:ry, lx:rx] for img in _stack]
+    _stack = [img[int(ly):int(ry), int(lx):int(rx)] for img in _stack]
 
     return _stack, _stack[0].shape
 
@@ -258,6 +258,7 @@ def main(images, dest):
         s[graph_img == idx] = f
 
     sol, BC, C = estimate_focal_depths(bw_images, blur_stack, s, fi, A=A, F=F)
+    print(sol, BC, C)
 
     # unary scaling factor to convert from float64 -> int32
     # pair scaling factor performs conversion and discounts mismatches

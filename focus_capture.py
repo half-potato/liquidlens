@@ -14,11 +14,14 @@ i = len([name for name in os.listdir(folder) if os.path.isfile(os.path.join(fold
 cap = util.openCamera(dev)
 os.system("v4l2-ctl -d %i -c focus_auto=0" % dev)
 
-focuses = xrange(0, 255, 5)
+focuses = xrange(10, 255, 5)
+focal_lengths = [util.focus_to_focal_length(i) for i in xrange(0, 255, 25)]
+csv = "".join(["%f,\n" % i for i in focal_lengths])
+with open("focuses.csv", "w+") as f:
+    f.write(csv)
 
 for f in focuses:
     os.system("v4l2-ctl -d %i -c focus_absolute=%i" % (dev, f))
-    print(util.focus_to_focal_length(f))
     time.sleep(0.1)
     ret, frame = cap.read()
     if frame is None or len(frame) < 1:

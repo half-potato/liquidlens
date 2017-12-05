@@ -2,7 +2,7 @@ import cv2
 import signal
 
 # Patience is in seconds. Lower if camera refused to open
-def openCamera(dev, patience=5):
+def openCamera(dev, patience=10):
     cap = cv2.VideoCapture(dev)
     cap.set(3, 640)
     cap.set(4, 480)

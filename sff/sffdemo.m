@@ -1,7 +1,6 @@
 clear, clc, close all
 %% Load the variables of the focus sequence:
-load imdata2.mat
-imdata = imdata2;
+load test3.mat
 
 % This loads a structure with two fields: images, a 1x30 cell
 % array where each cell is a string with the path of one
@@ -17,7 +16,7 @@ showimages(imdata.images, imdata.focus, imdata.ROI);
 % as originally proposed by [1] and compute
 % reliability according to [2]:
 
-[z, r] = sff(imdata.images, 'focus', imdata.focus);
+[z, r] = sff(imdata.images, 'focus', imdata.focus, 'fmeasure', 'LAPM');
 
 %% Carve depthmap by removing pixels with R<20 dB:
 zc = z;

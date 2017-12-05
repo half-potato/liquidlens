@@ -37,4 +37,4 @@ def openCamera(dev, patience=5):
 def focus_to_focal_length(f):
     if f == 0:
         f = 0.5
-    return 165470*float(f)**(-2.55)
+    return 16547*float(f)**(-2.55)

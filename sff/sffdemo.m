@@ -1,6 +1,6 @@
 clear, clc, close all
 %% Load the variables of the focus sequence:
-load test3.mat
+load test4.mat
 
 % This loads a structure with two fields: images, a 1x30 cell
 % array where each cell is a string with the path of one
